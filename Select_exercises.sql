@@ -1,6 +1,10 @@
-
 -- FOR THIS ASSIGNMENT I WOULD WRITE THE CODE AND USE THAT CODE TO ANSWER THE QUESTION BELOW.
+USE albums_db;
 
+
+SELECT * FROM albums;
+
+-- Explore the structures of the albums table.
 
 SELECT * FROM albums;
 
@@ -24,14 +28,14 @@ FROM albums;
 -- what is the oldest release date for any album in the albums table? What is the most recent release date?
 -- oldest(1967) youngest(2011)
 
-SELECT *
+SELECT name
 FROM albums
 WHERE artist = "Pink Floyd";
 
 -- The name of all the pink floyd albums
 -- The Dark Side of the Moon, The Wall
 
-SELECT *
+SELECT release_date
 FROM albums
 WHERE name = "Sgt. Pepper's Lonely Hearts Club Band";
 
@@ -45,7 +49,7 @@ WHERE name = "Nevermind";
 -- What genre is the album Nevermind
 -- Grunge, Alternative rock
 
-SELECT *
+SELECT name , release_date
 FROM albums
 WHERE release_date BETWEEN 1990 AND 1999;
 
