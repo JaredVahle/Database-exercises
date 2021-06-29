@@ -88,7 +88,7 @@ GROUP BY first_name, last_name;
 
 SELECT DISTINCT last_name
 FROM employees
-WHERE (last_name LIKE "%q%") AND last_name NOT LIKE "%qu%";
+WHERE (last_name LIKE "%q%") AND (last_name NOT LIKE "%qu%");
 
 -- Chleq, Lindqvist, Qiwen
 
