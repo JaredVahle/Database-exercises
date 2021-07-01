@@ -13,14 +13,53 @@ SELECT emp_no, dept_no, from_date AS "Start Date", to_date,
 	END AS is_current_employee
 FROM dept_emp;
 
+
+#-------------------------------------------------TEST CODE BELOW------------------------------------------------------#
 SELECT emp_no, dept_no, from_date AS "Start Date", to_date,
 	IF(to_date > NOW() , True, False) AS is_current_employee
 FROM dept_emp;
 
+SELECT *, concat(first_name," ",last_name),
+	CASE
+		WHEN de.to_date >= now() THEN 1
+		ELSE 0
+		END AS is_current_employee
+FROM employees AS e
+WHERE de.emp_no = (
+	SELECT emp_no
+	FROM dept_emp
+	WHERE de.to_date = (
+		SELECT MAX(to_date)
+		FROM dept_emp
+JOIN dept_emp AS de ON dept_emp.emp_no =  employees.emp_no
+GROUP BY is_current_employee
+));
+
+SELECT *,
+	CASE
+	WHEN to_date >= NOW() THEN 1
+	ELSE 0
+	END AS is_current_employee
+FROM dept_emp AS de
+JOIN employees AS e ON e.emp_no = de.emp_no
+WHERE to_date = (
+	SELECT 
+		CASE
+		WHEN (
+			SELECT emp_no,COUNT(emp)
+			FROM dept_emp
+			GROUP BY emp_no AS emp) > 1 THEN "9999-01-01"
+		ELSE to_date
+		END AS count
+		FROM dept_emp
+);
+
+#-------------------------------------------------TEST CODE BELOW------------------------------------------------------#
+
 
 # 2. Write a query that returns all employee names (previous and current), and a new column 'alpha_group' that returns 'A-H', 'I-Q', or 'R-Z' depending on the first letter of their last name.
 
-SELECT *,
+SELECT last_name,
 	CASE
 	WHEN last_name BETWEEN "A" AND "Hz%" THEN "A-H"
 	WHEN last_name BETWEEN "I" AND "Qz%" THEN "I-Q"
@@ -41,7 +80,7 @@ SELECT count(*) AS "# of employees",
 FROM employees
 GROUP BY decade_born;
 
-# BONUS
+# BONUS----------------------
 
 
 
@@ -60,6 +99,6 @@ SELECT
 FROM salaries
 JOIN dept_emp AS de ON de.emp_no = salaries.emp_no
 JOIN departments AS d ON d.dept_no = de.dept_no
-WHERE de.to_date = "9999-01-01" AND salaries.to_date = "9999-01-01"
+WHERE salaries.to_date = "9999-01-01"
 GROUP BY department_groups
 ORDER BY AVG(salary) DESC;
