@@ -85,7 +85,6 @@ WHERE to_date = "9999-01-01" AND salary >= (
 	WHERE to_date = "9999-01-01") - (
 		SELECT STD(salary)
 		FROM salaries
-		WHERE to_date = "9999-01-01"
 );
 
 #STANDARD DEV BASED ON ALL EMPLOYEE SALARIES
