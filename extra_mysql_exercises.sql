@@ -83,14 +83,39 @@ ORDER BY life_expectancy;
 
 
 #--------------------------------------BONUS--------------------------------
-
+USE world;
 # Find all the countries whose local name is different from the official name
+
+SELECT name, localname
+FROM country
+WHERE name != localname;
 
 # How many countries have a life expectancy less than x?
 
+SELECT name, lifeexpectancy
+FROM country
+WHERE lifeexpectancy < 70; # this is your X value and you can change the 70 to raise the expected life expectancy.
+
+
 # What state is city x located in?
 
+
+SELECT *
+FROM country
+WHERE country.code IN (
+	SELECT city.countrycode
+	FROM city
+	WHERE city.name = "x" # This is where you put in the city name and it will return with the country information
+);
+
+SELECT Name,District
+FROM city
+WHERE city.name IN "X"; # This returns the district information only given city name
 # What region of the world is city x located in?
+
+SELECT region, country.name, city.name  # COME BACK LATER TO FINISH----------
+FROM country
+JOIN city ON city.countrycode = country.code;
 
 # What country (use the human readable name) city x located in?
 
