@@ -80,3 +80,18 @@ SELECT continent,AVG(LifeExpectancy) AS life_expectancy
 FROM country
 GROUP BY continent
 ORDER BY life_expectancy;
+
+
+#--------------------------------------BONUS--------------------------------
+
+# Find all the countries whose local name is different from the official name
+
+# How many countries have a life expectancy less than x?
+
+# What state is city x located in?
+
+# What region of the world is city x located in?
+
+# What country (use the human readable name) city x located in?
+
+# What is the life expectancy in city x?
