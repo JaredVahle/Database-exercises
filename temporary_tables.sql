@@ -67,3 +67,22 @@ FROM payment_change;
 
 # Find out how the current average pay in each department compares to the overall, historical average pay. In order to make the comparison easier, you should use the Z-score for salaries. In terms of salary, what is the best department right now to work for? The worst?
 
+USE employees;
+
+
+CREATE TEMPORARY TABLE germain_1460.cur_avg_dept_sal AS
+SELECT dept_name, AVG(salary) AS "current_avg_sal"
+FROM salaries
+JOIN dept_emp AS de ON de.emp_no = salaries.emp_no
+JOIN departments AS d ON d.dept_no = de.dept_no
+WHERE salaries.to_date = "9999-01-01" AND de.to_date = "9999-01-01"
+GROUP BY dept_name;
+
+ALTER TABLE germain_1460.cur_avg_dept_sal ADD zscore FLOAT(10,3);
+
+UPDATE germain_1460.cur_avg_dept_sal SET zscore = ((current_avg_sal - (SELECT AVG(salary) FROM employees.salaries)) / (SELECT STDDEV(salary) FROM employees.salaries));
+
+SELECT *
+FROM germain_1460.cur_avg_dept_sal;
+
+# BEST DEPARTMENT - SALES ------- WORST DEPARTMENT - HUMAN RESOURCES
