@@ -105,18 +105,33 @@ FROM country
 WHERE country.code IN (
 	SELECT city.countrycode
 	FROM city
-	WHERE city.name = "x" # This is where you put in the city name and it will return with the country information
+	WHERE city.name = "kabul" # This is where you put in the city name and it will return with the country information
 );
 
 SELECT Name,District
 FROM city
-WHERE city.name IN "X"; # This returns the district information only given city name
+WHERE city.name IN ("Kabul"); # This returns the district information only given city name
 # What region of the world is city x located in?
 
-SELECT region, country.name, city.name  # COME BACK LATER TO FINISH----------
+SELECT region, city.name 
 FROM country
-JOIN city ON city.countrycode = country.code;
+JOIN city ON city.countrycode = country.code
+WHERE city.name IN ("Kabul"); # All you have to enter is the target city name ie. "X"
 
 # What country (use the human readable name) city x located in?
 
+SELECT country.name AS "country_of_orgin"
+FROM country
+WHERE country.code = (
+	SELECT city.countrycode
+	FROM city
+	WHERE city.name IN ("Kabul")
+);
 # What is the life expectancy in city x?
+
+SELECT LifeExpectancy
+FROM country
+WHERE country.code = (
+	SELECT city.countrycode
+	FROM city
+	WHERE city.name IN ("Haag"))
