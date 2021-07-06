@@ -58,8 +58,8 @@ FROM sakila.payment;
 SELECT *
 FROM payment_change;
 
-ALTER TABLE payment_change ADD new_amount FLOAT (10,2);
-UPDATE payment_change SET new_amount = (amount * 100);
+ALTER TABLE payment_change ADD number_of_cents DECIMAL (10,2);
+UPDATE payment_change SET number_of_cents = (amount * 100);
 ALTER TABLE payment_change DROP COLUMN amount;
 
 SELECT *
@@ -83,6 +83,7 @@ ALTER TABLE germain_1460.cur_avg_dept_sal ADD zscore FLOAT(10,3);
 UPDATE germain_1460.cur_avg_dept_sal SET zscore = ((current_avg_sal - (SELECT AVG(salary) FROM employees.salaries)) / (SELECT STDDEV(salary) FROM employees.salaries));
 
 SELECT *
-FROM germain_1460.cur_avg_dept_sal;
+FROM germain_1460.cur_avg_dept_sal
+ORDER BY zscore DESC;
 
 # BEST DEPARTMENT - SALES ------- WORST DEPARTMENT - HUMAN RESOURCES
